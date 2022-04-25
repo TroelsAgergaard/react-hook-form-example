@@ -17,7 +17,7 @@ function App() {
 
   const validation = (data) => {
     console.log(data);
-    console.log('errors:' + errors)
+    console.log("errors:" + errors);
   };
 
   return (
@@ -61,7 +61,10 @@ function App() {
           />
           {errors.email && <p>{errors.email.message}</p>}
           <input
-            {...register("email", { required: "field is required" })}
+            {...register("email", {
+              required: "field is required!!",
+              validate: (value) => value === "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" || "forkert email",
+            })}
             type="text"
             placeholder="Email"
             className="mt-2
