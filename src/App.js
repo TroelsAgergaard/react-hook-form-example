@@ -57,23 +57,25 @@ function App() {
                     bg-gray-100
                     border-transparent
                     focus:border-gray-500 focus:bg-white focus:ring-0
-"
+                    "
           />
           {errors.email && <p>{errors.email.message}</p>}
           <input
             {...register("email", {
               required: "field is required!!",
-              validate: (value) => value === "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" || "forkert email",
+              validate: (value) =>
+                /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value) ||
+                "forkert email...",
             })}
             type="text"
             placeholder="Email"
             className="mt-2
-                    block
-                    w-full
-                    rounded-md
-                    bg-gray-100
-                    border-transparent
-                    focus:border-gray-500 focus:bg-white focus:ring-0
+            block
+            w-full
+            rounded-md
+            bg-gray-100
+            border-transparent
+            focus:border-gray-500 focus:bg-white focus:ring-0
 "
           />
           {errors.bekraeftemail && <p>{errors.bekraeftemail.message}</p>}
