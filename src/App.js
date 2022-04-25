@@ -16,8 +16,6 @@ const schema = yup
       .required(),
     bekraeftemail: yup
       .string()
-      .email()
-      .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "invalid email")
       .oneOf([yup.ref("email")], "Mismatched emails")
       .required(),
   })
