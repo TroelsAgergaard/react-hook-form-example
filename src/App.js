@@ -1,8 +1,27 @@
-import { useRef } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { render } from "@testing-library/react";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup
+  .object({
+    fornavn: yup.string().required(),
+    efternavn: yup.string().required(),
+    email: yup
+      .string()
+      .email()
+      .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "invalid email")
+      .required(),
+    bekraeftemail: yup
+      .string()
+      .email()
+      .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "invalid email")
+      .oneOf([yup.ref("email")], "Mismatched emails")
+      .required(),
+  })
+  .required();
 
 function App() {
   const {
@@ -10,10 +29,12 @@ function App() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
-  const email = useRef({});
-  email.current = watch("email", "");
+  // const emailRef = useRef({});
+  // emailRef.current = watch("email", "");
 
   const validation = (data) => {
     console.log(data);
@@ -28,13 +49,7 @@ function App() {
         >
           {errors.fornavn && <p>{errors.fornavn.message}</p>}
           <input
-            {...register("fornavn", {
-              required: "field is required",
-              minLength: {
-                value: 2,
-                message: "A minimum of two characters are required",
-              },
-            })}
+            {...register("fornavn")}
             type="text"
             placeholder="Fornavn"
             className="mt-2
@@ -46,7 +61,9 @@ function App() {
                     focus:border-gray-500 focus:bg-white focus:ring-0
 "
           />
+          {errors.efternavn && <p>{errors.efternavn.message}</p>}
           <input
+            {...register("efternavn")}
             type="text"
             placeholder="Efternavn"
             className="mt-2
@@ -60,7 +77,7 @@ function App() {
           />
           {errors.email && <p>{errors.email.message}</p>}
           <input
-            {...register("email", { required: "field is required" })}
+            {...register("email")}
             type="text"
             placeholder="Email"
             className="mt-2
@@ -74,11 +91,7 @@ function App() {
           />
           {errors.bekraeftemail && <p>{errors.bekraeftemail.message}</p>}
           <input
-            {...register("bekraeftemail", {
-              required: "field is required",
-              validate: (value) =>
-                value === email.current || "Emails do not match",
-            })}
+            {...register("bekraeftemail")}
             type="text"
             placeholder="Bekræft email"
             className="mt-2
