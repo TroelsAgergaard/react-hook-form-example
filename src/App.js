@@ -7,17 +7,25 @@ import * as yup from "yup";
 
 const schema = yup
   .object({
-    fornavn: yup.string().required(),
-    efternavn: yup.string().required(),
-    email: yup
+    fornavn: yup
+      .string()
+      .required("Venligst udfyld fornavn")
+      .matches(/^[aA-zZÀ-ÿ -]+$/, "Fornavn må kun indeholde bogstaver")
+      .min(2, "Fornavn skal mindst indeholde to bogstaver"),
+    efternavn: yup
+      .string()
+      .required()
+      .matches(/^[aA-zZÀ-ÿ -]+$/, "Efternavn må kun indeholde bogstaver")
+      .min(2, "Efternavn skal mindst indeholde to bogstaver"),
+      email: yup
       .string()
       .email()
-      .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "invalid email")
-      .required(),
+      .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Venligst brug formatet: navn@eksempel.dk")
+      .required("Venligst udfyld din email adresse"),
     bekraeftemail: yup
       .string()
-      .oneOf([yup.ref("email")], "Mismatched emails")
-      .required(),
+      .oneOf([yup.ref("email")], "Venligst kontroler at de to indtastede email adresser er ens")
+      .required("Venligst bekræft din email adresse"),
   })
   .required();
 
@@ -34,7 +42,7 @@ function App() {
   // const emailRef = useRef({});
   // emailRef.current = watch("email", "");
 
-  const validation = (data) => {
+  const handleData = (data) => {
     console.log(data);
   };
 
@@ -42,10 +50,10 @@ function App() {
     <>
       <div className="App mt-10 w-1/3 mx-auto">
         <form
-          onSubmit={handleSubmit(validation)}
+          onSubmit={handleSubmit(handleData)}
           className="flex justify-center flex-col items-center"
         >
-          {errors.fornavn && <p>{errors.fornavn.message}</p>}
+          {errors.fornavn && <p>{errors.fornavn?.message}</p>}
           <input
             {...register("fornavn")}
             type="text"
