@@ -12,7 +12,7 @@ const schema = yup
       .min(2, "Fornavn skal mindst indeholde to bogstaver"),
     efternavn: yup
       .string()
-      .required()
+      .required("Venligst udfyld efternavn")
       .matches(/^[aA-zZÀ-ÿ -]+$/, "Efternavn må kun indeholde bogstaver")
       .min(2, "Efternavn skal mindst indeholde to bogstaver"),
     email: yup
@@ -43,7 +43,6 @@ function App() {
     resolver: yupResolver(schema),
   });
 
-  // const emailRef = useRef({});
   // emailRef.current = watch("email", "");
 
   const handleData = (data) => {
