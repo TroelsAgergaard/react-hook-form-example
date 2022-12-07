@@ -17,7 +17,6 @@ const schema = yup
       .min(2, "Efternavn skal mindst indeholde to bogstaver"),
     email: yup
       .string()
-      .email()
       .matches(
         /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
         "Venligst brug formatet: navn@eksempel.dk"
@@ -56,7 +55,7 @@ function App() {
           onSubmit={handleSubmit(handleData)}
           className="flex justify-center flex-col items-center"
         >
-          {errors.fornavn && <p>{errors.fornavn?.message}</p>}
+          {errors.fornavn && <p className="mt-3">{errors.fornavn?.message}</p>}
           <input
             {...register("fornavn")}
             type="text"
@@ -70,7 +69,9 @@ function App() {
                     focus:border-gray-500 focus:bg-white focus:ring-0
 "
           />
-          {errors.efternavn && <p>{errors.efternavn.message}</p>}
+          {errors.efternavn && (
+            <p className="mt-3">{errors.efternavn.message}</p>
+          )}
           <input
             {...register("efternavn")}
             type="text"
@@ -84,7 +85,7 @@ function App() {
                     focus:border-gray-500 focus:bg-white focus:ring-0
 "
           />
-          {errors.email && <p>{errors.email.message}</p>}
+          {errors.email && <p className="mt-3">{errors.email.message}</p>}
           <input
             {...register("email")}
             type="text"
@@ -98,7 +99,9 @@ function App() {
                     focus:border-gray-500 focus:bg-white focus:ring-0
 "
           />
-          {errors.bekraeftemail && <p>{errors.bekraeftemail.message}</p>}
+          {errors.bekraeftemail && (
+            <p className="mt-3">{errors.bekraeftemail.message}</p>
+          )}
           <input
             {...register("bekraeftemail")}
             type="text"
@@ -126,7 +129,7 @@ function App() {
           />
           <input
             type="submit"
-            value="Videre"
+            value="Opret bruger konto"
             className="bg-green-500 rounded-md mt-10 cursor-pointer pt-1 pb-1 pl-10 pr-10 text-white"
           />
         </form>
