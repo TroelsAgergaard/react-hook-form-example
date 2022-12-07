@@ -56,7 +56,7 @@ const Signup = () => {
 
   return (
     <>
-      {formCompleated && <Navigate to="payment" />}
+      {/* {formCompleated && <Navigate to="payment" />} */}
       <form
         onSubmit={handleSubmit(handleData)}
         className="flex justify-center flex-col items-center"
@@ -131,8 +131,7 @@ const Signup = () => {
                     "
         />
         <input
-          type="submit"
-          // type="button"
+          type="button"
           onClick={handleData}
           defaultValue="Videre"
           className="bg-green-500 rounded-md mt-10 cursor-pointer pt-1 pb-1 pl-10 pr-10 text-white"

@@ -1,8 +1,5 @@
 import { useState, createContext } from "react";
-export const formContext = createContext({
-  fornavn: "",
-  efternavn: "",
-});
+export const formContext = createContext({});
 
 const FormProvider = ({ children }) => {
   const [formdata, setFormdata] = useState({});
