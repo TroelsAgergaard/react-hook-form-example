@@ -1,5 +1,3 @@
-import logo from "./logo.svg";
-import "./App.css";
 import { render } from "@testing-library/react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -17,14 +15,20 @@ const schema = yup
       .required()
       .matches(/^[aA-zZÀ-ÿ -]+$/, "Efternavn må kun indeholde bogstaver")
       .min(2, "Efternavn skal mindst indeholde to bogstaver"),
-      email: yup
+    email: yup
       .string()
       .email()
-      .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Venligst brug formatet: navn@eksempel.dk")
+      .matches(
+        /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+        "Venligst brug formatet: navn@eksempel.dk"
+      )
       .required("Venligst udfyld din email adresse"),
     bekraeftemail: yup
       .string()
-      .oneOf([yup.ref("email")], "Venligst kontroler at de to indtastede email adresser er ens")
+      .oneOf(
+        [yup.ref("email")],
+        "Venligst kontroler at de to indtastede email adresser er ens"
+      )
       .required("Venligst bekræft din email adresse"),
   })
   .required();
